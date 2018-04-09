@@ -2,7 +2,6 @@
 target = "192.168.56.0/24"
 
 """Local network discovery inventory script
-
 Generates an Ansible inventory of all hosts on a local network that
 appear to be capable of incoming SSh connections (i.e. have port 22
 open).
