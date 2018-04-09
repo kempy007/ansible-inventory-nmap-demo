@@ -47,13 +47,6 @@ class LocalNetworkInventory(object):
       action="store",
       help="Get all the variables about a specific instance"
     )
-    parser.add_argument(
-      "--connect-address",
-      metavar="ADDR",
-      action="store",
-      default="whiskerlabs.com",
-      help="A hostname or IP address to use in determining localhost's public IP"
-    )
     self.args = parser.parse_args()
 
 
