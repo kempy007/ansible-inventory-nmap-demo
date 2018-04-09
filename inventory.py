@@ -3,8 +3,7 @@ target = "192.168.56.0/24"
 
 """Local network discovery inventory script
 Generates an Ansible inventory of all hosts on a local network that
-appear to be capable of incoming SSh connections (i.e. have port 22
-open).
+have port 22 open, ensure file has chmod +x).
 """
 
 import argparse
@@ -58,23 +57,11 @@ class LocalNetworkInventory(object):
 
   def json_format_dict(self, data):
     return json.dumps(data, sort_keys=True, indent=2)
-
-
-  def get_local_routing_prefix(self):
-    """Computes the local network routing prefix in CIDR notation."""
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sock.connect((self.args.connect_address, 80))
-    localhost_ip = sock.getsockname()[0]
-    sock.close()
-    octet_strs = localhost_ip.split('.')[:3]
-    octet_strs.append('0')
-    return '.'.join(octet_strs) + "/24"
-
+  
 
   def lookup_local_ips(self):
     """Lookup IPs of hosts connected to the local network"""
     nm = nmap.PortScanner()
-#    nm.scan(hosts=self.get_local_routing_prefix(), arguments="-p 22 --open")
     nm.scan(hosts=target, arguments="-p 22 --open")
     return nm.all_hosts()
 
